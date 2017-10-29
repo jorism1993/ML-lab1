@@ -1,0 +1,27 @@
+def create_w_b(a,t,X):
+    w = np.sum(a * t[:, None] * X, axis = 0)
+    # print (w)
+    
+    condition = (a>1*(10**-5)).reshape(-1)
+    
+    b = t[cond] - np.dot(X[cond],w)
+    bias = b[0]
+    
+    return w,bias
+
+X, t = create_X_and_t(X1, X2)
+a = compute_multipliers(X,t)
+w,b = create_w_b(a,t,X)
+
+slope = -w[0]/w[1]
+intercept = -b / w[1]
+
+x_coor = np.linspace(0,4)
+y_coor = slope*x_coor + intercept
+
+plt.scatter(X1[:,0],X1[:,1],label='mu1 = (1,1)')
+plt.scatter(X2[:,0],X2[:,1],label='mu2 = (3,3)')
+plt.plot(x_coor, y_coor, 'k-')
+plt.scatter(SV[:,0],SV[:,1],label='Support Vectors',s=100)   
+plt.legend()
+plt.show()
